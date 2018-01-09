@@ -287,7 +287,7 @@
 						<form name="filter" id="filter">
 							<div class="field">
 								By text<br>
-								<input type="text" name="else" placeholder="Admin name or email" onblur="this.form.submit()"<%if (request.getParameter("else") != null) {%> value="<%=request.getParameter("else") %>"<%} %>>
+								<input type="text" name="else" placeholder="Admin id, name or email" onblur="this.form.submit()"<%if (request.getParameter("else") != null) {%> value="<%=request.getParameter("else") %>"<%} %>>
 							</div>
 							<div class="field">
 								Role<br>
@@ -314,6 +314,14 @@
 									<option value="5"<%if (request.getParameter("rpp") != null && request.getParameter("rpp").equals("5")) {%> selected<%} %>>5</option>
 									<option value="10"<%if (request.getParameter("rpp") != null && request.getParameter("rpp").equals("10")) {%> selected<%} %>>10</option>
 									<option value="20"<%if (request.getParameter("rpp") != null && request.getParameter("rpp").equals("20")) {%> selected<%} %>>20</option>
+								</select>
+							</div>
+							<div class="field">
+								Working status<br>
+								<select name="status" onchange="this.form.submit()">
+									<option value="2"<%if (request.getParameter("status") != null && request.getParameter("status").equals("2")) {%> selected<%} %>>All statuses</option>
+									<option value="1"<%if (request.getParameter("status") != null && request.getParameter("status").equals("1")) {%> selected<%} %>>Working</option>
+									<option value="0"<%if (request.getParameter("status") != null && request.getParameter("status").equals("0")) {%> selected<%} %>>Not working</option>
 								</select>
 							</div>
 							<div class="field">
@@ -356,8 +364,8 @@
 					<div class="sec-f">
 						<div class="clear"></div>
 						<% ArrayList<Admin> alist = null;
-						if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null) {
-							alist = madao.getFilteredAdminList(request.getParameter("else"), request.getParameter("rol"), request.getParameter("gen"), request.getParameter("sort"), request.getParameter("order"));
+						if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) {
+							alist = madao.getFilteredAdminList(request.getParameter("else"), request.getParameter("rol"), request.getParameter("gen"), request.getParameter("status"), request.getParameter("sort"), request.getParameter("order"));
 						}
 						else if (madao.getAdminList() != null) {
 							alist = madao.getAdminList();
@@ -374,13 +382,14 @@
 							on = Integer.parseInt(request.getParameter("page"));
 						} else on = 1; %>
 						<form style="width: 100%;" name="test">
-							<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null) { %>
+							<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
 								<input type="hidden" name="else" value="<%=request.getParameter("else") %>">
 								<input type="hidden" name="rol" value="<%=request.getParameter("rol") %>">
 								<input type="hidden" name="gen" value="<%=request.getParameter("gen") %>">
 								<input type="hidden" name="rpp" value="<%=request.getParameter("rpp") %>">
 								<input type="hidden" name="sort" value="<%=request.getParameter("sort") %>">
 								<input type="hidden" name="order" value="<%=request.getParameter("order") %>">
+								<input type="hidden" name="status" value="<%=request.getParameter("status") %>">
 							<%} %>
 							<% if (request.getParameter("page") != null) { %>
 								<input type="hidden" name="page" value="<%=request.getParameter("page") %>">
@@ -426,6 +435,9 @@
 								</tbody>
 							</table>
 						</form>
+						<%} else {%>
+						<center><strong>No results returned.</strong></center>
+						<%} %>
 					</div>
 					<div class="sec-f">
 						<div class="clear"></div>
@@ -435,13 +447,14 @@
 									<tr>
 										<td align="left">
 											<form id="paging">
-												<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null) { %>
+												<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
 													<input type="hidden" name="else" value="<%=request.getParameter("else") %>">
 													<input type="hidden" name="rol" value="<%=request.getParameter("rol") %>">
 													<input type="hidden" name="gen" value="<%=request.getParameter("gen") %>">
 													<input type="hidden" name="rpp" value="<%=request.getParameter("rpp") %>">
 													<input type="hidden" name="sort" value="<%=request.getParameter("sort") %>">
 													<input type="hidden" name="order" value="<%=request.getParameter("order") %>">
+													<input type="hidden" name="status" value="<%=request.getParameter("status") %>">
 												<%} %>
 												<% if (request.getParameter("aid") != null) { %>
 													<input type="hidden" name="aid" value="<%=request.getParameter("aid") %>">
@@ -454,13 +467,14 @@
 										</td>
 										<td align="right">
 											<form>
-												<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null) { %>
+												<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
 													<input type="hidden" name="else" value="<%=request.getParameter("else") %>">
 													<input type="hidden" name="rol" value="<%=request.getParameter("rol") %>">
 													<input type="hidden" name="gen" value="<%=request.getParameter("gen") %>">
 													<input type="hidden" name="rpp" value="<%=request.getParameter("rpp") %>">
 													<input type="hidden" name="sort" value="<%=request.getParameter("sort") %>">
 													<input type="hidden" name="order" value="<%=request.getParameter("order") %>">
+													<input type="hidden" name="status" value="<%=request.getParameter("status") %>">
 												<%} %>
 												<% if (request.getParameter("new") != null) { %>
 													<input type="hidden" name="new" value="<%=request.getParameter("new") %>">
@@ -566,8 +580,13 @@
 			</div>
 		</div>
 		<script>
-			<%int size;
-			size = alist.size();
+			<%
+			if (alist != null) {
+			int size = alist.size();
+			int rpp = 5;
+			if (request.getParameter("rpp") != null) rpp = Integer.parseInt(request.getParameter("rpp"));
+			int on = 1;
+			if (request.getParameter("page") != null) on = Integer.parseInt(request.getParameter("page"));
 			%>
 			pagingManagement(<%=size %>, <%=rpp %> , <%=on %>);
 		</script>

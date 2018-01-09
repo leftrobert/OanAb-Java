@@ -48,15 +48,15 @@ public class ManageAdminDAO {
         return null;
 	}
 	
-	public ArrayList<Admin> getFilteredAdminList(String els, String rol, String gen, String sor, String ord) {
+	public ArrayList<Admin> getFilteredAdminList(String els, String rol, String gen, String stt, String sor, String ord) {
 		session = HibernateUtil.getSessionFactory().openSession();
         String sql = "From Admin a";
         
-        if (!els.equals("") || !rol.equals("0") || !gen.equals("2")) {
+        if (!els.equals("") || !rol.equals("0") || !gen.equals("2") || !stt.equals("2")) {
         	sql = sql + " where";
         }
         if (!els.equals("")) {
-        	sql = sql + " (a.name like '%"+els+"%' or a.email like '%"+els+"%')";
+        	sql = sql + " (a.name like '%"+els+"%' or a.email like '%"+els+"%' or a.id like '%"+els+"%')";
         }
         if (!rol.equals("0")) {
         	if (!els.equals("")) sql += " and"; 
@@ -65,6 +65,10 @@ public class ManageAdminDAO {
         if (!gen.equals("2")) {
         	if (!els.equals("") || !rol.equals("0")) sql += " and"; 
         	sql = sql + " a.gender = "+gen;
+        }
+        if (!stt.equals("2")) {
+        	if (!els.equals("") || !rol.equals("0") || !gen.equals("2")) sql += " and"; 
+        	sql = sql + " a.status = "+stt;
         }
         sql = sql + " order by a." + sor + " " + ord;
         System.out.println(sql);
