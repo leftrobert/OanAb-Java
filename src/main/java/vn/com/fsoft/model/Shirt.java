@@ -153,6 +153,41 @@ public class Shirt {
 		this.status = status;
 	}
 
+	public Shirt() {
+		super();
+	}
+
+	public Shirt(String id, String catId, String name, int gender, String material, String date, int price,
+			String sizes, String colors, String imageFile, int sold, boolean status) {
+		super();
+		this.id = id;
+		this.catId = catId;
+		this.name = name;
+		this.gender = gender;
+		this.material = material;
+		this.date = date;
+		this.price = price;
+		this.sizes = sizes;
+		this.colors = colors;
+		this.imageFile = imageFile;
+		this.sold = sold;
+		this.status = status;
+	}
+
+	public Shirt(String id, String catId, String name, String gender, String date, String price, String sizes, String colors,
+			String status) {
+		super();
+		this.id = id;
+		this.catId = catId;
+		this.name = name;
+		this.gender = Integer.parseInt(gender);
+		this.date = date;
+		this.price = Integer.parseInt(price);
+		this.sizes = sizes;
+		this.colors = colors;
+		this.status = (status.equals("1")?true:false);
+	}
+
 	@Override
 	public String toString() {
 		return "Shirt [id=" + id + ", catId=" + catId + ", name=" + name + ", gender=" + gender + ", material="

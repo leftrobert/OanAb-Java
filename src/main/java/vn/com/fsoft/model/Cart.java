@@ -94,7 +94,7 @@ public class Cart {
 		super();
 	}
 
-	public Cart(String id, String billId, String shirtId, String size, String color, int amount) {
+	public Cart(String id, String billId, String shirtId, String size, String color, int amount, int price) {
 		super();
 		this.id = id;
 		this.billId = billId;
@@ -103,6 +103,16 @@ public class Cart {
 		this.color = color;
 		this.amount = amount;
 		this.price = price;
+	}
+
+	public Cart(String id, String billId, String shirtId, String size, String color, int amount) {
+		super();
+		this.id = id;
+		this.billId = billId;
+		this.shirtId = shirtId;
+		this.size = size;
+		this.color = color;
+		this.amount = amount;
 	}
 
 	@Override

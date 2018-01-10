@@ -18,13 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.com.fsoft.dao.ShirtDAO;
 import vn.com.fsoft.model.Shirt;
 
+@SuppressWarnings("unused")
 @Controller
 public class DetailsController{
 	@RequestMapping(value = "/handlingDetails", method=RequestMethod.POST)
 	public String handlingIndex(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 	@RequestParam("shirtId") String shirtid, HttpSession session){
-		// TODO Auto-generated method stub
-//		session.setAttribute("s_to_see", shirtid);
 		return "redirect:details";
 	}
 }

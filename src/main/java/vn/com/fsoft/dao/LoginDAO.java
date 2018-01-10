@@ -7,19 +7,17 @@ import vn.com.fsoft.model.Admin;
 import vn.com.fsoft.model.User;
 import vn.com.fsoft.util.HibernateUtil;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class LoginDAO {
 	Session session = null;
 	
+	@SuppressWarnings("unchecked")
 	public boolean checkLogin(String phone, String pass){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
 		String md5p = "";
 		MessageDigest md;
 		try {
@@ -28,7 +26,6 @@ public class LoginDAO {
 			BigInteger bigInteger = new BigInteger(1, md.digest());
 			md5p = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(md5p);
@@ -43,9 +40,9 @@ public class LoginDAO {
         return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public boolean checkAdmin(String admin, String pass){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
 		String md5p = "";
 		MessageDigest md;
 		try {
@@ -54,7 +51,6 @@ public class LoginDAO {
 			BigInteger bigInteger = new BigInteger(1, md.digest());
 			md5p = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(md5p);

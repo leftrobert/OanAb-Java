@@ -1,22 +1,16 @@
 package vn.com.fsoft.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import vn.com.fsoft.dao.LoginDAO;
-import vn.com.fsoft.dao.UserDAO;
 import vn.com.fsoft.model.Admin;
 import vn.com.fsoft.model.User;
 
@@ -25,8 +19,6 @@ public class LoginController{
 	@RequestMapping(value = "/handlingLogin", method=RequestMethod.POST)
 	public String handlingLogin(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 	@RequestParam("phone") String phone, @RequestParam("pass") String pass, HttpSession session){
-//		System.out.println("login: " + phone + " " + pass);
-		// TODO Auto-generated method stub
 		LoginDAO ldao = new LoginDAO();
 		if(phone == "" || pass == "") {
 			session.setAttribute("message", "Fill in the required field to continue");
@@ -47,8 +39,6 @@ public class LoginController{
 	@RequestMapping(value = "/handlingAdmin", method=RequestMethod.POST)
 	public String handlingAdmin(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 	@RequestParam("admin") String admin, @RequestParam("pass") String pass, HttpSession session){
-		System.out.println("admin login: " + admin + " " + pass);
-		// TODO Auto-generated method stub
 		LoginDAO ldao = new LoginDAO();
 		if(admin == "" || pass == "") {
 			session.setAttribute("message", "Fill in the required field to continue");

@@ -1,12 +1,5 @@
 package vn.com.fsoft.model;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -86,7 +79,6 @@ public class Admin {
 		this.dob = dob;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public String enDob() {
 		String s[] = dob.split("-");
 		return s[1]+"/"+s[2]+"/"+s[0];
@@ -159,11 +151,11 @@ public class Admin {
 		this.password = password;
 		this.name = name;
 		this.dob = dob;
-		this.gender = (true?gender.equals("1"):false);
+		this.gender = (gender.equals("1")?true:false);
 		this.phone = phone;
 		this.email = email;
 		this.startDate = startDate;
-		this.status = (true?status.equals("1"):false);
+		this.status = (status.equals("1")?true:false);
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import org.hibernate.Transaction;
 
 import vn.com.fsoft.model.Admin;
 import vn.com.fsoft.model.Role;
-import vn.com.fsoft.model.Shirt;
 import vn.com.fsoft.util.HibernateUtil;
 
 import java.math.BigInteger;
@@ -15,14 +14,13 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class ManageAdminDAO {
 	Session session = null;
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Role> getRoleList(){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
         String sql = "From Role r";
         Query query = session.createQuery(sql);
         
@@ -34,9 +32,9 @@ public class ManageAdminDAO {
         return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Admin> getAdminList(){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
         String sql = "From Admin a";
         Query query = session.createQuery(sql);
         
@@ -48,6 +46,7 @@ public class ManageAdminDAO {
         return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Admin> getFilteredAdminList(String els, String rol, String gen, String stt, String sor, String ord) {
 		session = HibernateUtil.getSessionFactory().openSession();
         String sql = "From Admin a";
@@ -85,7 +84,6 @@ public class ManageAdminDAO {
 	@SuppressWarnings("unchecked")
 	public Admin getAdmin(String aid){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
         String sql = "From Admin a where a.id = '" + aid + "'";
         Query query = session.createQuery(sql);
         
@@ -101,7 +99,6 @@ public class ManageAdminDAO {
 	@SuppressWarnings("unchecked")
 	public String getRole(String rid){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
         String sql = "From Role r where r.id = '" + rid + "'";
         Query query = session.createQuery(sql);
         
@@ -158,9 +155,6 @@ public class ManageAdminDAO {
         String start = new SimpleDateFormat("yyyy-MM-dd").format(d);
         System.out.println("md5 pass = " + md5p(apass));
         Admin a = new Admin(aid, arol, md5p(apass), aname, adob, agen, aphone, amail, start, astt);
-//        String sql = "Insert into Admin(id, roleId, password, name, dob, gender, phone, email, startDate, status) select id, roleId, password, name, dob, gender, phone, email, startDate, status from a";
-//        Query query = session.createQuery(sql);
-//        int result = query.executeUpdate();
         session.save(a);
         tx.commit();
         session.close();
@@ -186,15 +180,14 @@ public class ManageAdminDAO {
 			BigInteger bigInteger = new BigInteger(1, md.digest());
 			p = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return p;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String nextID () {
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
         String sql = "From Admin a";
         Query query = session.createQuery(sql);
         

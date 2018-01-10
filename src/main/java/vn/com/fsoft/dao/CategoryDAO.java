@@ -7,14 +7,13 @@ import vn.com.fsoft.model.Category;
 import vn.com.fsoft.util.HibernateUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryDAO {
 	Session session = null;
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Category> getList(){
 		session = HibernateUtil.getSessionFactory().openSession();
-        //session.beginTransaction();
         String sql = "From Category c ";
         Query query = session.createQuery(sql);
         

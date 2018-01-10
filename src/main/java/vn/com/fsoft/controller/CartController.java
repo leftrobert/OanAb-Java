@@ -1,27 +1,22 @@
 package vn.com.fsoft.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import vn.com.fsoft.dao.ShirtDAO;
 import vn.com.fsoft.model.Cart;
-import vn.com.fsoft.model.Shirt;
 
 @Controller
 public class CartController{
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/addToCart", method=RequestMethod.POST)
 	public String handlingCart(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 			@RequestParam("shirtId") String shirtid, @RequestParam("size") String size, @RequestParam("color") String color, @RequestParam("amount") String amount, HttpSession session){
@@ -54,6 +49,7 @@ public class CartController{
 		return "redirect:cart";
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/removeFromCart", method=RequestMethod.POST)
 	public String handlingRemoveCart(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 			@RequestParam("remove") String index, HttpSession session){

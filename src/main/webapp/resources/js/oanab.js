@@ -148,12 +148,27 @@ function activeStatus() {
 	if (document.forms["regform"]["status"]) {
 		var el = document.forms["regform"]["status"];
 		var ss = document.getElementsByName("s-status")[0];
-		var astt = document.getElementsByName("astt")[0];
+		var astt = document.getElementsByName("ustt")[0];
 		if (el.checked) {
 			ss.innerHTML = " Active";
 			astt.value = "1";
 		} else {
 			ss.innerHTML = " Inactive";
+			astt.value = "0";
+		}
+	}
+}
+
+function launchingStatus() {
+	if (document.forms["regform"]["status"]) {
+		var el = document.forms["regform"]["status"];
+		var ss = document.getElementsByName("s-status")[0];
+		var astt = document.getElementsByName("sstt")[0];
+		if (el.checked) {
+			ss.innerHTML = " Launching";
+			astt.value = "1";
+		} else {
+			ss.innerHTML = " Stopped";
 			astt.value = "0";
 		}
 	}
@@ -212,4 +227,49 @@ function pagingManagement(listSize, rpp, onPage) {
 		bl.appendChild(tl);
 		paging.appendChild(bl);
 	}
+}
+
+// Xem mau trong danh sach quan ly
+function colorsInList(id, c) {
+	var container = document.getElementById("cs"+id);
+	var allColors = c.split(",");
+	for (var i = 0; i < allColors.length; i++) {
+		var colorBox = document.createElement("div");
+		colorBox.setAttribute("name", "c");
+		if (!colorBox.classList.contains(allColors[i])){
+			colorBox.classList.add(allColors[i]);
+		}
+		container.appendChild(colorBox);
+		if (i < allColors.length - 1) {
+			container.appendChild(document.createTextNode(" "));
+		}
+	}
+}
+
+//Thay doi list mau trong Manage Shirt
+function changeColorList() {
+	var result = [];
+	var scolor = document.forms["info"]["scolor"];
+	if (document.forms["info"]["white"].checked) result.push("white");
+	if (document.forms["info"]["lgray"].checked) result.push("lgray");
+	if (document.forms["info"]["black"].checked) result.push("black");
+	if (document.forms["info"]["red"].checked) result.push("red");
+	if (document.forms["info"]["orange"].checked) result.push("orange");
+	if (document.forms["info"]["green"].checked) result.push("green");
+	if (document.forms["info"]["dblue"].checked) result.push("dblue");
+	if (document.forms["info"]["purple"].checked) result.push("purple");
+	scolor.value = result.toString();
+}
+
+//Thay doi list co ao trong Manage Shirt
+function changeSizeList() {
+	var result = [];
+	var ssize = document.forms["info"]["ssize"];
+	if (document.forms["info"]["XS"].checked) result.push("XS");
+	if (document.forms["info"]["S"].checked) result.push("S");
+	if (document.forms["info"]["M"].checked) result.push("M");
+	if (document.forms["info"]["L"].checked) result.push("L");
+	if (document.forms["info"]["XL"].checked) result.push("XL");
+	if (document.forms["info"]["XXL"].checked) result.push("XXL");
+	ssize.value = result.toString();
 }

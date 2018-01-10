@@ -4,14 +4,11 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import vn.com.fsoft.model.Admin;
 import vn.com.fsoft.util.HibernateUtil;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AdminDAO {
 	Session session = null;
@@ -38,7 +35,6 @@ public class AdminDAO {
 			BigInteger bigInteger = new BigInteger(1, md.digest());
 			p = bigInteger.toString(16);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return p;

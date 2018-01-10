@@ -289,7 +289,7 @@
 								</tr>
 								<tr>
 									<td class="rh">Category</td>
-									<td class="rd"><%=see.getCatId() %></td>
+									<td class="rd"><%=sdao.getCatName(see.getCatId()) %></td>
 								</tr>
 								<tr>
 									<td class="rh">Gender</td>

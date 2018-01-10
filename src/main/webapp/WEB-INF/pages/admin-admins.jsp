@@ -8,14 +8,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>OanAb - Admin info</title>
+		<title>OanAb - Admin Management</title>
 		<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/bg/VP.ico">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/oanab.css">
 		<script src="${pageContext.request.contextPath}/resources/js/oanab.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=0.9">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
-	<body onload="workingStatus();">
+	<body<%if (request.getParameter("aid")!=null || request.getParameter("new")!=null) {%> onload="workingStatus();"<%} %>>
 		<%if (session.getAttribute("loggedin") != null || session.getAttribute("adminin") != null || session.getAttribute("cart") != null) { %>
 		<div class="usernav">
 			<%if (session.getAttribute("loggedin") == null && session.getAttribute("adminin") != null) {%>
@@ -513,7 +513,7 @@
 					<form class="sec-i" id="regform" name="info" method="post" action="manageAdmin">
 						<div class="field">
 							Admin ID<br>
-							<input type="text" name="aid" placeholder="Admin ID" <%if (a1 != null) {%>value="<%=a1.getId() %>"<%} %> readonly="readonly">
+							<input class="read-only" type="text" name="aid" placeholder="Admin ID" <%if (a1 != null) {%>value="<%=a1.getId() %>"<%} %> readonly>
 						</div>
 						<div class="field">
 							Admin name<br>

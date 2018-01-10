@@ -86,6 +86,11 @@ public class User {
 	public void setDob(String dob) {
 		this.dob = dob;
 	}
+	
+	public String enDob() {
+		String s[] = dob.split("-");
+		return s[1]+"/"+s[2]+"/"+s[0];
+	}
 
 	public String getAddress() {
 		return address;
@@ -121,6 +126,20 @@ public class User {
 
 	public User() {
 		super();
+	}
+
+	public User(int id, String password, String name, String phone, String gender, String dob, String address,
+			String regDate, String status) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
+		this.gender = (gender.equals("1")?true:false);
+		this.dob = dob;
+		this.address = address;
+		this.regDate = regDate;
+		this.status = (status.equals("1")?true:false);
 	}
 
 	public User(int id, String password, String name, String phone, boolean gender, String dob, String address,

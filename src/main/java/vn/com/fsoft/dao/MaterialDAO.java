@@ -7,11 +7,11 @@ import vn.com.fsoft.model.Material;
 import vn.com.fsoft.util.HibernateUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MaterialDAO {
 	Session session = null;
 	
+	@SuppressWarnings("unchecked")
 	public ArrayList<Material> getList(){
 		session = HibernateUtil.getSessionFactory().openSession();
         //session.beginTransaction();
@@ -19,11 +19,10 @@ public class MaterialDAO {
         Query query = session.createQuery(sql);
         
         ArrayList<Material> list =  (ArrayList<Material>)query.list();
+        session.close();
         if (list.size() > 0) {
-            session.close();
             return list;
         }
-        session.close();
         return null;
 	}
 }

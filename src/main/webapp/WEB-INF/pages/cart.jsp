@@ -307,6 +307,9 @@
 						</table>
 						</form>
 						<br><strong>Total: <%=String.format("%,d", total) %> VND</strong>
+						<%if (session.getAttribute("loggedin") != null) {%>
+						<br><strong>Discount 5% as user: <%=String.format("%,d", total*19/20) %> VND</strong>
+						<%} %>
 						<div class="clear"></div>
 						<%} else {%>
 						<center><strong>Your cart is empty.</strong></center><br>
