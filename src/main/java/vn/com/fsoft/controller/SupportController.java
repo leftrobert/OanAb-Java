@@ -28,6 +28,7 @@ public class SupportController {
 	@RequestMapping(value = "/manageSupport", method = RequestMethod.POST)
 	public String manageSupport(@RequestParam("sid") String sid, @RequestParam("sstt") String sstt,
 			@RequestParam("action") String action, RedirectAttributes redirectAttributes, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		SupportDAO sdao = new SupportDAO();
 		if (action.equals("update")) {
 			sdao.updateSupport(sid, sstt);

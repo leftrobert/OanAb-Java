@@ -164,12 +164,13 @@ public class ManageShirtDAO {
         return result;
 	}
 	
-	public void insertShirt(String sid, String sname, String scat, String sgen, String scolor, String ssize, String sprice, String sstt) {
+	public void insertShirt(String sid, String sname, String scat, String sgen, String scolor, String ssize, String img, String sprice, String sstt) {
 		session = HibernateUtil.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
 		Date d = new Date();
         String start = new SimpleDateFormat("yyyy-MM-dd").format(d);
-        Shirt s = new Shirt(sid, scat, sname, sgen, start, sprice, ssize, scolor, sstt);
+        System.out.println(sid+" "+scat+" "+sname+" "+sgen+" "+start+" "+sprice+" "+ssize+" "+scolor+" "+img+" "+sstt);
+        Shirt s = new Shirt(sid, scat, sname, sgen, start, sprice, ssize, scolor, img, sstt);
         session.save(s);
         tx.commit();
         session.close();

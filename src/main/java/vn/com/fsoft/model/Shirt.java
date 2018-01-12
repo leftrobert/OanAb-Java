@@ -175,7 +175,7 @@ public class Shirt {
 	}
 
 	public Shirt(String id, String catId, String name, String gender, String date, String price, String sizes, String colors,
-			String status) {
+			String imageFile, String status) {
 		super();
 		this.id = id;
 		this.catId = catId;
@@ -186,6 +186,7 @@ public class Shirt {
 		this.price = Integer.parseInt(price);
 		this.sizes = sizes;
 		this.colors = colors;
+		this.imageFile = imageFile;
 		this.status = (status.equals("1")?true:false);
 	}
 

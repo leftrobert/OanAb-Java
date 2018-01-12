@@ -62,8 +62,6 @@ public class RequestController   {
 					e.printStackTrace();
 				}  
 			}
-			@SuppressWarnings("unused")
-			String filePath = rootPath + java.io.File.separator + fileName;
 		}
 		if (hasFile) request.setImageFile(fileName);
 		requestDAO.saveRequetsDAO(request);
@@ -74,6 +72,7 @@ public class RequestController   {
 	@RequestMapping(value = "/manageRequest", method = RequestMethod.POST)
 	public String manageRequest(@RequestParam("rid") String rid, @RequestParam("rstt") String rstt,
 			@RequestParam("action") String action, RedirectAttributes redirectAttributes, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		RequestDAO rdao = new RequestDAO();
 		if (action.equals("update")) {
 			rdao.updateRequest(rid, rstt);

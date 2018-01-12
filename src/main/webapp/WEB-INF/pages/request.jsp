@@ -328,7 +328,7 @@
 									<tr>
 										<td>
 											Choose your image (optional)<br>
-											<input type="file" name="reqfile"  accept="image/*">
+											<input type="file" name="reqfile" accept="image/*">
 										</td>
 									</tr>
 									<tr>

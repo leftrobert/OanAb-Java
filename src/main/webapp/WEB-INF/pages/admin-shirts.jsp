@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="vn.com.fsoft.dao.ManageShirtDAO"%>
 <%@page import="vn.com.fsoft.model.Category"%>
 <%@page import="vn.com.fsoft.model.Material"%>
@@ -539,10 +541,12 @@
 					</div>
 					<%} else {
 					Shirt s1 = null;
+					Date d = new Date();
+					String today = new SimpleDateFormat("yyyy-MM-dd").format(d);
 					if (request.getParameter("sid") != null) {
 						s1 = msdao.getShirt(request.getParameter("sid")); 
 					}%>
-					<form class="sec-i" id="regform" name="info" method="post" action="manageShirt">
+					<form class="sec-i" id="regform" name="info" method="post" action="manageShirt" enctype="multipart/form-data">
 						<div class="field">
 							Shirt name<br>
 							<input type="text" name="sname" placeholder="T-shirt's name" <%if (s1 != null) {%>value="<%=s1.getName() %>"<%} %>>
@@ -619,9 +623,9 @@
 							</label><br><br><br><br><br>
 							<input type="hidden" name="ssize" value="">
 						</div>
-						<div class="field">
+						<div class="field<%if (s1==null) {%> noinput<%} %>">
 							Date<br>
-							<input type="date" name="sdate" <% if (s1 != null) {%>value="<%=s1.getDate() %>"<%} %>>
+							<input type="date" name="sdate" value="<%=(s1!=null?s1.getDate():today) %>">
 						</div>
 						<div class="field">
 							Category<br>
@@ -637,14 +641,21 @@
 							Price<br>
 							<input type="number" min="0" name="sprice" placeholder="T-shirt's price" <%if (s1 != null) {%>value="<%=s1.getPrice() %>"<%} %>>
 						</div>
+						<%if (request.getParameter("new") != null && request.getParameter("sid") == null) {%>
+						<div class="field">
+							Image<br>
+							<input type="file" name="sfile" accept="image/*" required>
+						</div>
+						<%} %>
 						<div class="field">
 							Active status<br>
 							<label class="container"><span name="s-status"></span>
-								<input type="checkbox" name="status" <% if (s1 != null) { if (s1.isStatus()) {%>checked="checked"<%}} %> onchange="launchingStatus();">
+								<input type="checkbox" name="status" <% if (s1 != null) { if (s1.isStatus()) {%> checked="checked" <%}} %><%if (s1==null) {%> checked="checked" <%} %> onchange="launchingStatus();">
 								<span class="checkmark"></span>
 							</label>
 							<input type="hidden" name="sid" value='<%=(s1==null?"0":s1.getId()) %>'>
 							<input type="hidden" name="sstt">
+							<%if (request.getParameter("new") == null && request.getParameter("sid") != null) {%><input type="file" name="sfile" class="noinput"><%} %>
 						</div>
 						<div class="field" id="long" style="text-align: center;">
 							<%if (request.getParameter("new") != null) {%><button name="action" value="insert">Add</button><%} %>

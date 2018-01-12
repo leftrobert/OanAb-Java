@@ -21,6 +21,7 @@ public class ManAdminController{
 	@RequestParam("aid") String aid, @RequestParam("aname") String aname, @RequestParam("arol") String arol, @RequestParam("agen") String agen, 
 	@RequestParam("adob") String adob, @RequestParam("aphone") String aphone, @RequestParam("amail") String amail, @RequestParam("apass") String apass, 
 	@RequestParam("astt") String astt, @RequestParam("action") String action, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		Admin in = (Admin)session.getAttribute("adminin");
 		ManageAdminDAO adao = new ManageAdminDAO();
 		if (action.equals("update")) {
@@ -45,6 +46,7 @@ public class ManAdminController{
 	public String updateAdmin(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 	@RequestParam("name") String aname, @RequestParam("gender") String agen, 
 	@RequestParam("dob") String adob, @RequestParam("phone") String aphone, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		Admin in = (Admin)session.getAttribute("adminin");
 		ManageAdminDAO adao = new ManageAdminDAO();
 		adao.updateAdminPersonal(in.getId(), aname, agen, adob, aphone);
@@ -57,6 +59,7 @@ public class ManAdminController{
 	@RequestMapping(value = "/updateAdminPass", method=RequestMethod.POST)
 	public String updateAdminPass(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 			@RequestParam("pass") String pass, @RequestParam("passn") String passn, @RequestParam("passc") String passc, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		Admin in = (Admin)session.getAttribute("adminin");
 		ManageAdminDAO adao = new ManageAdminDAO();
 		if (!adao.md5p(pass).equals(in.getPassword())) {

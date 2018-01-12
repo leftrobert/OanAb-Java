@@ -373,7 +373,7 @@
 						%><a href="details?sid=<%=s.getId() %>">
 							<div class="sec-c-i">
 								<div name="<%=s.getId() %>" class="indexcolor"></div>
-								<div class="sec-c-i-d" style="background: url(${pageContext.request.contextPath}/resources/img/t/m224.png) no-repeat, url(${pageContext.request.contextPath}/resources/simg/<%=s.getImageFile() %>) no-repeat; background-size: cover, 80px auto; background-position: center, 70px 52px;"></div>
+								<div class="sec-c-i-d" style="background: url(${pageContext.request.contextPath}/resources/img/t/m224.png) no-repeat, url(${pageContext.request.contextPath}/resources/simg/<%=s.getImageFile() %>) no-repeat; background-size: cover, 80px auto; background-position: center, 68px 52px;"></div>
 								<table class="sec-c-i-t">
 									<tr>
 										<td class="sec-c-i-n" colspan="2"><%=s.getName() %></td>

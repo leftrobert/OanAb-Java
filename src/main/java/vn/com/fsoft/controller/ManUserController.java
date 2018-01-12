@@ -23,6 +23,7 @@ public class ManUserController{
 	@RequestParam("uid") String uid, @RequestParam("uname") String uname, @RequestParam("ugen") String ugen, 
 	@RequestParam("udob") String udob, @RequestParam("uphone") String uphone, @RequestParam("uadd") String uadd, @RequestParam("upass") String upass, 
 	@RequestParam("ustt") String ustt, @RequestParam("action") String action, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		ManageUserDAO udao = new ManageUserDAO();
 		if (action.equals("update")) {
 			udao.updateUser(uid, uname, ugen, udob, uphone, uadd, upass, ustt);
@@ -41,6 +42,7 @@ public class ManUserController{
 	public String updateUser(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 	@RequestParam("name") String uname, @RequestParam("gender") String ugen, @RequestParam("address") String uadd, 
 	@RequestParam("dob") String udob, @RequestParam("phone") String uphone, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		User in = (User)session.getAttribute("loggedin");
 		ManageUserDAO mdao = new ManageUserDAO();
 		mdao.updateUserPersonal(in.getId(), uname, uphone, ugen, udob, uadd);
@@ -53,6 +55,7 @@ public class ManUserController{
 	@RequestMapping(value = "/updateUserPass", method=RequestMethod.POST)
 	public String updateUserPass(HttpServletRequest arg0, HttpServletResponse arg1m,RedirectAttributes redirectAttributes,
 			@RequestParam("pass") String pass, @RequestParam("passn") String passn, @RequestParam("passc") String passc, HttpSession session) {
+		if (session.getAttribute("adminin") == null) return "redirect:admin";
 		User in = (User)session.getAttribute("loggedin");
 		ManageUserDAO mdao = new ManageUserDAO();
 		if (!mdao.md5p(pass).equals(in.getPassword())) {

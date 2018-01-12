@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RedirectController{
-	@RequestMapping(value = "/index", method=RequestMethod.GET)
+	@RequestMapping(value = "/", method=RequestMethod.GET)
 	public ModelAndView displayHome(HttpServletRequest arg0, HttpServletResponse arg1){
 		return new ModelAndView("index");
 	}
