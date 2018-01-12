@@ -1,13 +1,11 @@
-﻿<%@page import="vn.com.fsoft.dao.ShirtDAO"%>
-<%@page import="vn.com.fsoft.model.Shirt"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="vn.com.fsoft.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>OanAb - Shop</title>
+		<title>OanAb - Sign up</title>
 		<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/bg/VP.ico">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/oanab.css">
 		<script src="${pageContext.request.contextPath}/resources/js/oanab.js"></script>
@@ -258,17 +256,17 @@
 		</div>
 		<div id="dark" class="hided" onclick="menuOut();<%if (session.getAttribute("loggedin") != null || session.getAttribute("adminin") != null) { %> subOut();<%}%>"></div>
 		<div class="banner">
-			<form class="banner-c" name="searchbox" action="search" method="get">
+			<form class="banner-c">
 				<div class="slogan">
 					<span>It's not just clothes, it's T-shirts.</span>
 				</div>
 				<table class="search-b">
 					<tr>
 						<td class="search-b-t">
-							<input type="text" name="kw" placeholder="Search through hundreds of tees ...">
+							<input type="text" name="text" placeholder="Search through categories ...">
 						</td>
 						<td class="search-b-b">
-							<input type="submit" value="Search">
+							<input type="submit" name="button" value="Search">
 						</td>
 					</tr>
 				</table>
@@ -277,49 +275,70 @@
 		<div class="page">
 			<div class="page-c">
 				<div class="clear"></div>
-				<div class="sec" id="shop">
+				<div class="sec" id="reg">
 					<div class="sec-t">
 						<div class="sec-t-l"></div>
 						<div class="sec-t-m">
-							SEARCH RESULT
+							NEW ACCOUNT
 						</div>
 						<div class="sec-t-r"></div>
 					</div>
-					<div class="sec-c">
-						<% if (request.getParameter("kw") == null || request.getParameter("kw").equals("")) {%>
-						<div class="clear"></div>
-						<center><strong>Invalid keyword.</strong></center>
-						<%} else {
-						ShirtDAO sdao = new ShirtDAO();
-						ArrayList<Shirt> slist = sdao.searchByName(request.getParameter("kw"));
-						if(slist != null){
-						for(Shirt s: slist) {
-						%><a href="details?sid=<%=s.getId() %>">
-							<div class="sec-c-i">
-								<div name="<%=s.getId() %>" class="indexcolor"></div>
-								<div class="sec-c-i-d" style="background: url(${pageContext.request.contextPath}/resources/img/t/m224.png) no-repeat, url(${pageContext.request.contextPath}/resources/simg/<%=s.getImageFile() %>) no-repeat; background-size: cover, 80px auto; background-position: center, 70px 52px;"></div>
-								<table class="sec-c-i-t">
-									<tr>
-										<td class="sec-c-i-n" colspan="2"><%=s.getName() %></td>
-									</tr>
-									<tr>
-										<td class="sec-c-i-m"><%=s.getMaterial() %></td>
-										<td class="sec-c-t-s" align="right"><%=s.getSold() %> sold!</td>
-									</tr>
-									<tr>
-										<td class="sec-c-i-p" colspan="2"><%=s.printPrice() %> VND</td>
-									</tr>
-								</table>
-							</div>
-						</a><% }} else { %>
-						<div class="clear"></div>
-						<center><strong>No shirts could be found for your keyword for now. Please check back later.</strong></center><% }} %>
-					</div>
+					<form class="sec-c" id="regform" method="post" action="handlingSignup">
+						<div class="field" id="long">
+							<strong>Your phone number is required for your next logins. Please make sure you have that number.</strong>
+						</div>
+						<div class="field">
+							Your name<br>
+							<input type="text" name="uname" placeholder="Your full name" required>
+						</div>
+						<div class="field">
+							Phone number<br>
+							<input type="text" name="uphone" placeholder="Mobile" required>
+						</div>
+						<div class="field">
+							Gender<br>
+							<select name="ugen" form="regform" required>
+								<option value="1">Male</option>
+								<option value="0">Female</option>
+							</select>
+						</div>
+						<div class="field">
+							Date of birth<br>
+							<input type="date" name="udob" required>
+						</div>
+						<div class="field" id="long">
+							Address<br>
+							<input type="text" name="uadd" placeholder="Your most recent address" required>
+						</div>
+						<div class="field">
+							Password<br>
+							<input type="password" name="pass" placeholder="Password" required>
+						</div>
+						<div class="field">
+							Confirm password<br>
+							<input type="password" name="cpass" placeholder="Confirm password" required>
+						</div>
+						<div class="field" id="long">
+							<iframe src="tandp"></iframe>
+						</div>
+						<div class="field" id="long">
+							<label class="container" id="longcheck"> I have read and accept OanAb's Terms and Policies.
+								<input type="checkbox" name="status" onchange="agreeStatus();">
+								<span class="checkmark"></span>
+							</label>
+							<input type="hidden" name="agreed" value="0">
+						</div>
+						<div class="field" id="long" style="text-align: center;">
+							<input type="submit" name="signup" value="Signup">
+						</div>
+						<div class="field" id="long">
+							<div id="alert" style="padding: 5px 9px 13px 9px; width: 300px;"></div>
+						</div>
+					</form>
 				</div>
 				<div class="clear"></div>
 			</div>
 		</div>
-		<div class="clear"></div>
 		<div class="bot">
 			<table class="bot-c">
 				<tr>
@@ -333,11 +352,8 @@
 			</table>
 		</div>
 		
-		<%ShirtDAO sdao = new ShirtDAO();
-		ArrayList<Shirt> slist = sdao.searchByName(request.getParameter("kw"));
-		if(slist != null){
-		for(Shirt s: slist){%>
-		<script>firstColor("<%=s.getId() %>", "<%=s.getColors() %>");</script>
-		<%}} %>
+		<%if (session.getAttribute("message") != null) {%>
+		<script>loginFailed("<%=session.getAttribute("message") %>")</script>
+		<%session.removeAttribute("message");} %>
 	</body>
 </html>

@@ -1,6 +1,6 @@
+<%@page import="vn.com.fsoft.dao.RequestDAO"%>
+<%@page import="vn.com.fsoft.model.Request"%>
 <%@page import="vn.com.fsoft.model.Admin"%>
-<%@page import="vn.com.fsoft.model.Role"%>
-<%@page import="vn.com.fsoft.dao.ManageAdminDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,14 +8,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>OanAb - Admin Management</title>
+		<title>OanAb - Support Management</title>
 		<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/bg/VP.ico">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/oanab.css">
 		<script src="${pageContext.request.contextPath}/resources/js/oanab.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=0.9">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
-	<body<%if (request.getParameter("aid")!=null || request.getParameter("new")!=null) {%> onload="workingStatus();"<%} %>>
+	<body<%if (request.getParameter("rid")!=null) {%> onload="rsolvingStatus();"<%} %>>
 		<%if (session.getAttribute("loggedin") != null || session.getAttribute("adminin") != null || session.getAttribute("cart") != null) { %>
 		<div class="usernav">
 			<%if (session.getAttribute("loggedin") == null && session.getAttribute("adminin") != null) {%>
@@ -258,7 +258,7 @@
 			</div>
 		</div>
 		<div id="dark" class="hided" onclick="menuOut();<%if (session.getAttribute("loggedin") != null || session.getAttribute("adminin") != null) { %> subOut();<%}%>"></div>
-		<div class="page" style="top: 56px;">
+		<div class="page" style="top:56px;">
 		<%if (session.getAttribute("adminin") == null) {%>
 		<div class="page-c">
 			<div class="clear"></div>
@@ -279,7 +279,7 @@
 		</div>
 	<%	} else {
 			Admin ain = (Admin)session.getAttribute("adminin");
-			if (!ain.getRoleId().equals("r0")) { %>
+			if (ain.getRoleId().equals("r3")) { %>
 		<div class="page-c">
 			<div class="clear"></div>
 			<div class="sec" id="caution">
@@ -292,13 +292,13 @@
 				</div>
 				<div class="sec-f">
 					<div class="clear"></div>
-					<center><strong>You do not have rights to manage OanAb's admins.</strong></center>
+					<center><strong>You do not have rights to manage user's support request.</strong></center>
 				</div>
 				<div class="clear"></div>
 			</div>
 		</div>
 		<%	} else {
-			ManageAdminDAO madao = new ManageAdminDAO(); %>
+			RequestDAO rqdao = new RequestDAO(); %>
 		<div class="page-c">
 				<div class="clear"></div>
 				<div class="sec" id="filter">
@@ -313,25 +313,22 @@
 						<form name="filter" id="filter">
 							<div class="field">
 								By text<br>
-								<input type="text" name="else" placeholder="Admin id, name or email" onblur="this.form.submit()"<%if (request.getParameter("else") != null) {%> value="<%=request.getParameter("else") %>"<%} %>>
+								<input type="text" name="else" placeholder="Keyword" onblur="this.form.submit()"<%if (request.getParameter("else") != null) {%> value="<%=request.getParameter("else") %>"<%} %>>
 							</div>
 							<div class="field">
-								Role<br>
-								<select name="rol" onchange="this.form.submit()">
-									<option value="0">All roles</option>
-									<%if (madao.getRoleList() != null) {
-									ArrayList<Role> rlist = madao.getRoleList();
-									for (Role r: rlist) { %>
-									<option value="<%=r.getId() %>"<%if (request.getParameter("rol") != null && request.getParameter("rol").equals(r.getId())) {%> selected<%} %>><%=r.getRoleComment() %></option>
-									<%}} %>
+								Has image<br>
+								<select name="image" onchange="this.form.submit()">
+									<option value="2"<%if (request.getParameter("image") != null && request.getParameter("image").equals("2")) {%> selected<%} %>>All</option>
+									<option value="1"<%if (request.getParameter("image") != null && request.getParameter("image").equals("1")) {%> selected<%} %>>Yes</option>
+									<option value="0"<%if (request.getParameter("image") != null && request.getParameter("image").equals("0")) {%> selected<%} %>>No</option>
 								</select>
 							</div>
 							<div class="field">
-								Gender<br>
-								<select name="gen" onchange="this.form.submit()">
-									<option value="2"<%if (request.getParameter("gen") != null && request.getParameter("gen").equals("2")) {%> selected<%} %>>All</option>
-									<option value="1"<%if (request.getParameter("gen") != null && request.getParameter("gen").equals("1")) {%> selected<%} %>>Male</option>
-									<option value="0"<%if (request.getParameter("gen") != null && request.getParameter("gen").equals("0")) {%> selected<%} %>>Female</option>
+								Active status<br>
+								<select name="status" onchange="this.form.submit()">
+									<option value="2"<%if (request.getParameter("status") != null && request.getParameter("status").equals("2")) {%> selected<%} %>>All statuses</option>
+									<option value="1"<%if (request.getParameter("status") != null && request.getParameter("status").equals("1")) {%> selected<%} %>>Done</option>
+									<option value="0"<%if (request.getParameter("status") != null && request.getParameter("status").equals("0")) {%> selected<%} %>>Pending</option>
 								</select>
 							</div>
 							<div class="field">
@@ -343,36 +340,14 @@
 								</select>
 							</div>
 							<div class="field">
-								Working status<br>
-								<select name="status" onchange="this.form.submit()">
-									<option value="2"<%if (request.getParameter("status") != null && request.getParameter("status").equals("2")) {%> selected<%} %>>All statuses</option>
-									<option value="1"<%if (request.getParameter("status") != null && request.getParameter("status").equals("1")) {%> selected<%} %>>Working</option>
-									<option value="0"<%if (request.getParameter("status") != null && request.getParameter("status").equals("0")) {%> selected<%} %>>Not working</option>
-								</select>
-							</div>
-							<div class="field">
-								Sort by<br>
-								<select name="sort" onchange="this.form.submit()">
-									<option value="id"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("id")) {%> selected<%} %>>Admin ID</option>
-									<option value="roleId"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("roleId")) {%> selected<%} %>>Role</option>
-									<option value="name"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("name")) {%> selected<%} %>>Name</option>
-									<option value="dob"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("dob")) {%> selected<%} %>>Date of birth</option>
-									<option value="gender"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("gender")) {%> selected<%} %>>Gender</option>
-									<option value="status"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("status")) {%> selected<%} %>>Working status</option>
-								</select>
-							</div>
-							<div class="field">
 								Order<br>
 								<select name="order" onchange="this.form.submit()">
-									<option value="asc"<%if (request.getParameter("order") != null && request.getParameter("order").equals("asc")) {%> selected<%} %>>Ascending</option>
-									<option value="desc"<%if (request.getParameter("order") != null && request.getParameter("order").equals("desc")) {%> selected<%} %>>Descending</option>
+									<option value="asc"<%if (request.getParameter("order") != null && request.getParameter("order").equals("asc")) {%> selected<%} %>>Oldest first</option>
+									<option value="desc"<%if (request.getParameter("order") != null && request.getParameter("order").equals("desc")) {%> selected<%} %>>Newest first</option>
 								</select>
 								<input type="hidden" name="page" value="1">
-								<%if (request.getParameter("aid") != null) {%>
-									<input type="hidden" name="aid" value="<%=request.getParameter("aid") %>">
-								<%} %>
-								<%if (request.getParameter("new") != null) {%>
-									<input type="hidden" name="new" value="new">
+								<%if (request.getParameter("rid") != null) {%>
+									<input type="hidden" name="rid" value="<%=request.getParameter("rid") %>">
 								<%} %>
 							</div>
 						</form>
@@ -383,37 +358,24 @@
 					<div class="sec-t">
 						<div class="sec-t-l"></div>
 						<div class="sec-t-m">
-							ADMIN LIST
+							REQUEST LIST
 						</div>
 						<div class="sec-t-r"></div>
 					</div>
 					<div class="sec-f">
 						<div class="clear"></div>
-						<% ArrayList<Admin> alist = null;
-						if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) {
-							alist = madao.getFilteredAdminList(request.getParameter("else"), request.getParameter("rol"), request.getParameter("gen"), request.getParameter("status"), request.getParameter("sort"), request.getParameter("order"));
+						<% ArrayList<Request> rlist = null;
+						if (request.getParameter("else") != null && request.getParameter("image") != null && request.getParameter("rpp") != null && request.getParameter("order") != null && request.getParameter("status") != null) {
+							rlist = rqdao.getFilteredList(request.getParameter("else"), request.getParameter("image"), request.getParameter("status"), request.getParameter("order"));
 						}
-						else if (madao.getAdminList() != null) {
-							alist = madao.getAdminList();
-						}
-						if (alist != null) {
-						int s;
-						int i = 1;
-						int rpp = 5;
-						int on = 1;
-						if (request.getParameter("rpp") != null) {
-							rpp = Integer.parseInt(request.getParameter("rpp"));
-						}
-						if (request.getParameter("page") != null) {
-							on = Integer.parseInt(request.getParameter("page"));
-						} else on = 1; %>
+						else if (rqdao.getList() != null) {
+							rlist = rqdao.getList();
+						}%>
 						<form style="width: 100%;" name="test">
-							<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
+							<% if (request.getParameter("else") != null && request.getParameter("rpp") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
 								<input type="hidden" name="else" value="<%=request.getParameter("else") %>">
-								<input type="hidden" name="rol" value="<%=request.getParameter("rol") %>">
-								<input type="hidden" name="gen" value="<%=request.getParameter("gen") %>">
+								<input type="hidden" name="image" value="<%=request.getParameter("image") %>">
 								<input type="hidden" name="rpp" value="<%=request.getParameter("rpp") %>">
-								<input type="hidden" name="sort" value="<%=request.getParameter("sort") %>">
 								<input type="hidden" name="order" value="<%=request.getParameter("order") %>">
 								<input type="hidden" name="status" value="<%=request.getParameter("status") %>">
 							<%} %>
@@ -423,35 +385,35 @@
 							<table>
 								<tbody>
 									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Role</th>
-										<th>Gender</th>
-										<th>DOB</th>
-										<th>Phone</th>
-										<th>Email</th>
+										<th>#</th>
+										<th>Date</th>
+										<th>Title</th>
 										<th>Status</th>
+										<th>Has image</th>
 										<th>Action</th>
 									</tr>
 									<%
-									for (Admin a: alist) {
+									if (rlist != null) {
+										int s;
+										int i = 1;
+										int rpp = 5;
+										int on = 1;
+										if (request.getParameter("rpp") != null) {
+											rpp = Integer.parseInt(request.getParameter("rpp"));
+										}
+										if (request.getParameter("page") != null) {
+											on = Integer.parseInt(request.getParameter("page"));
+										} else on = 1; 
+									for (Request rq: rlist) {
 										s = (on-1)*rpp-1;
-										if (i > (on-1)*rpp && i <= on*rpp) {
-										if ((i-s)%2 == 0) {%>
-									<tr class="odd">
-										<%} else { %>
-									<tr class="even">
-										<%}
-										%>
-										<td><%=a.getId() %></td>
-										<td><%=a.getName() %></td>
-										<td><%=madao.getRole(a.getRoleId()) %></td>
-										<td><%if (a.isGender()) {%>Male<%} else {%>Female<%} %></td>
-										<td><%=a.enDob() %></td>
-										<td><%=a.getPhone() %></td>
-										<td><%=a.getEmail() %></td>
-										<td><%if (a.isStatus()) {%>Yes<%} else {%>No<%} %></td>
-										<td><button name="aid" value="<%=a.getId() %>">Select</button></td>
+										if (i > (on-1)*rpp && i <= on*rpp) {%>
+									<tr class="<%=((i-s)%2==0?"odd":"even") %>">
+										<td><%=i %></td>
+										<td><%=rq.enDate() %></td>
+										<td><%=rq.getTitle() %></td>
+										<td><%=(rq.isStatus()?"Done":"Pending") %></td>
+										<td><%=(rq.getImageFile()!=null?"Yes":"No") %></td>
+										<td><button name="rid" value="<%=rq.getId() %>">Select</button></td>
 									</tr>
 									<%}
 										i++;
@@ -459,9 +421,6 @@
 								</tbody>
 							</table>
 						</form>
-						<%} else {%>
-						<center><strong>No results returned.</strong></center>
-						<%} %>
 					</div>
 					<div class="sec-f">
 						<div class="clear"></div>
@@ -471,43 +430,21 @@
 									<tr>
 										<td align="left">
 											<form id="paging">
-												<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
+												<% if (request.getParameter("else") != null && request.getParameter("rpp") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
 													<input type="hidden" name="else" value="<%=request.getParameter("else") %>">
-													<input type="hidden" name="rol" value="<%=request.getParameter("rol") %>">
-													<input type="hidden" name="gen" value="<%=request.getParameter("gen") %>">
+													<input type="hidden" name="rpp" value="<%=request.getParameter("image") %>">
 													<input type="hidden" name="rpp" value="<%=request.getParameter("rpp") %>">
-													<input type="hidden" name="sort" value="<%=request.getParameter("sort") %>">
 													<input type="hidden" name="order" value="<%=request.getParameter("order") %>">
 													<input type="hidden" name="status" value="<%=request.getParameter("status") %>">
 												<%} %>
-												<% if (request.getParameter("aid") != null) { %>
-													<input type="hidden" name="aid" value="<%=request.getParameter("aid") %>">
-												<%} %>
-												<% if (request.getParameter("new") != null) { %>
-													<input type="hidden" name="new" value="<%=request.getParameter("new") %>">
+												<% if (request.getParameter("rid") != null) { %>
+													<input type="hidden" name="rid" value="<%=request.getParameter("rid") %>">
 												<%} %>
 												<strong>Page: </strong>
 											</form>
 										</td>
 										<td align="right">
-											<form>
-												<% if (request.getParameter("else") != null && request.getParameter("rol") != null && request.getParameter("gen") != null && request.getParameter("rpp") != null && request.getParameter("sort") != null && request.getParameter("order") != null && request.getParameter("status") != null) { %>
-													<input type="hidden" name="else" value="<%=request.getParameter("else") %>">
-													<input type="hidden" name="rol" value="<%=request.getParameter("rol") %>">
-													<input type="hidden" name="gen" value="<%=request.getParameter("gen") %>">
-													<input type="hidden" name="rpp" value="<%=request.getParameter("rpp") %>">
-													<input type="hidden" name="sort" value="<%=request.getParameter("sort") %>">
-													<input type="hidden" name="order" value="<%=request.getParameter("order") %>">
-													<input type="hidden" name="status" value="<%=request.getParameter("status") %>">
-												<%} %>
-												<% if (request.getParameter("new") != null) { %>
-													<input type="hidden" name="new" value="<%=request.getParameter("new") %>">
-												<%} %>
-												<% if (request.getParameter("page") != null) { %>
-													<input type="hidden" name="page" value="<%=request.getParameter("page") %>">
-												<%} %>
-												<button name="new" value="new">Add</button>
-											</form>
+											<strong>Select a request to view in the section below.</strong>
 										</td>
 									</tr>
 								</tbody>
@@ -520,93 +457,71 @@
 					<div class="sec-t">
 						<div class="sec-t-l"></div>
 						<div class="sec-t-m">
-							CHANGE INFO
+							VIEW
 						</div>
 						<div class="sec-t-r"></div>
 					</div>
 					<div class="clear"></div>
-					<%if (request.getParameter("aid") == null && request.getParameter("new") == null) {%>
+					<%if (request.getParameter("rid") == null) {%>
 					<div class="sec-c">
-						<center><strong>Select an admin to change their information.</strong></center>
+						<center><strong>Select a request to view and make changes.</strong></center>
 					</div>
 					<%} else {
-					Admin a1 = null;
-					if (request.getParameter("aid") != null) {
-						a1 = madao.getAdmin(request.getParameter("aid")); 
+					Request r1 = null;
+					if (request.getParameter("rid") != null) {
+						r1 = rqdao.getRequest(request.getParameter("rid")); 
 					}%>
-					<form class="sec-i" id="regform" name="info" method="post" action="manageAdmin">
-						<div class="field">
-							Admin ID<br>
-							<input class="read-only" type="text" name="aid" placeholder="Admin ID" <%if (a1 != null) {%>value="<%=a1.getId() %>"<%} %> readonly>
-						</div>
-						<div class="field">
-							Admin name<br>
-							<input type="text" name="aname" placeholder="Admin's full name" <%if (a1 != null) {%>value="<%=a1.getName() %>"<%} %>>
-						</div>
-						<div class="field">
-							Role<br>
-							<select name="arol" form="regform">
-								<%if (madao.getRoleList() != null) {
-								ArrayList<Role> rlist = madao.getRoleList();
-								for (Role r: rlist) { %>
-								<option value="<%=r.getId() %>" <% if (a1 != null) { if (a1.getRoleId().equals(r.getId())) {%>selected<%}} %>><%=r.getRoleComment() %></option>
-								<%}} %>
-							</select>
-						</div>
-						<div class="field">
-							Gender<br>
-							<select name="agen" form="regform">
-								<option value="1" <% if (a1 != null) { if (a1.isGender()) {%>selected<%}} %>>Male</option>
-								<option value="0" <% if (a1 != null) { if (!a1.isGender()) {%>selected<%}} %>>Female</option>
-							</select>
-						</div>
-						<div class="field">
-							Date of birth<br>
-							<input type="date" name="adob" <% if (a1 != null) {%>value="<%=a1.getDob() %>"<%} %>>
-						</div>
-						<div class="field">
-							Phone<br>
-							<input type="text" name="aphone" placeholder="Mobile" <% if (a1 != null) {%>value="<%=a1.getPhone() %>"<%} %>>
-						</div>
-						<div class="field">
-							Email<br>
-							<input type="text" name="amail" placeholder="E-mail address" <% if (a1 != null) {%>value="<%=a1.getEmail() %>"<%} %>>
-						</div>
-						<div class="field">
-							Password<br>
-							<input type="password" name="apass" placeholder="Password" <%if (request.getParameter("new") != null) {%>required<%} %>>
-						</div>
-						<div class="field">
-							Working status<br>
-							<label class="container"><span name="s-status"></span>
-								<input type="checkbox" name="status" <% if (a1 != null) { if (a1.isStatus()) {%>checked="checked"<%}} %> onchange="workingStatus();">
-								<span class="checkmark"></span>
-							</label>
-							<input type="hidden" name="astt">
-						</div>
-						<div class="field" id="long" style="text-align: center;">
-							<%if (request.getParameter("new") != null) {%><button name="action" value="insert">Add</button><%} %>
-							<%if (request.getParameter("new") == null && request.getParameter("aid") != null) {%><button name="action" value="update">Change</button><%} %>
-							<%if (request.getParameter("aid") != null && madao.getAdmin(request.getParameter("aid")) != null) { 
-								String said = request.getParameter("aid");
-								Admin ad = (Admin)session.getAttribute("adminin");
-								if (!said.equals(ad.getId())) { %>
-								<button name="action" value="delete">Remove</button>
-						<%	} else {%>
-								<br><br><strong>You cannot delete yourself.</strong>
-						<%	}
-						} %>
-						</div>
+					<form class="sec-i" id="regform" name="info" method="post" action="manageRequest">
+						<table style="width:100%; line-height:24px; background:#FFFFFF; box-shadow:0 2px 5px rgba(0,0,0,.3);">
+							<tbody>
+								<tr colspan="2" class="sp"><tr>
+								<tr>
+									<td align="left" class="rsl"><strong>Email</strong></td>
+									<td align="justify" class="rsr"><%=r1.getEmail() %></td>
+								</tr>
+								<tr colspan="2" class="sp"><tr>
+								<tr>
+									<td align="left" class="rsl"><strong>Title</strong></td>
+									<td align="justify" class="rsr"><%=r1.getTitle() %></td>
+								</tr>
+								<tr colspan="2" class="sp"><tr>
+								<tr>
+									<td align="left" class="rsl"><strong>Description</strong></td>
+									<td align="justify" class="rsr"><%=r1.getDescription() %></td>
+								</tr>
+								<tr colspan="2" class="sp"><tr>
+								<tr>
+									<td align="left" class="rsl"><strong>Image</strong></td>
+									<td align="justify" class="rsr"><%if (r1.getImageFile() != null) {%><div class="rqi"><img src="${pageContext.request.contextPath}/resources/rimg/<%=r1.getImageFile() %>"></div><%} else {%>No image<%} %></td>
+								</tr>
+								<tr colspan="2" class="sp"><tr>
+								<tr style="background:#E8E8E8;">
+									<td align="left" class="rsl">
+										Status<br>
+										<label class="container"><span name="s-status"></span>
+											<input type="checkbox" name="status" <% if (r1 != null) { if (r1.isStatus()) {%>checked="checked"<%}} %> onchange="rsolvingStatus();">
+											<span class="checkmark"></span>
+										</label>
+										<input type="hidden" name="rid" value="<%=r1.getId() %>">
+										<input type="hidden" name="rstt" value="<%=(r1.isStatus()?"1":"0") %>">
+									</td>
+									<td align="right" class="rsr">
+										<button name="action" value="update">Change</button>
+										<button name="action" value="delete">Remove</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</form>
-					<%} %>
+					<%}} %>
 				</div>
 				<div class="clear"></div>
 			</div>
 		</div>
 		<script>
 			<%
-			if (alist != null) {
-			int size = alist.size();
+			if (rlist != null) {
+			int size = rlist.size();
 			int rpp = 5;
 			if (request.getParameter("rpp") != null) rpp = Integer.parseInt(request.getParameter("rpp"));
 			int on = 1;

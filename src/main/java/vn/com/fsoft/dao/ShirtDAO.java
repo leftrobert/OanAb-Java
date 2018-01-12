@@ -15,7 +15,7 @@ public class ShirtDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Shirt> getList(){
 		session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "From Shirt s ";
+        String sql = "From Shirt s where s.status = true";
         Query query = session.createQuery(sql);
         
         ArrayList<Shirt> list =  (ArrayList<Shirt>)query.list();
@@ -29,7 +29,7 @@ public class ShirtDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Shirt> getHotList(){
 		session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "From Shirt s order by s.date desc";
+        String sql = "From Shirt s where s.status = true order by s.date desc";
         Query query = session.createQuery(sql).setMaxResults(8);
         
         ArrayList<Shirt> list =  (ArrayList<Shirt>)query.list();
@@ -44,7 +44,7 @@ public class ShirtDAO {
 	public ArrayList<Shirt> getTrendingList(){
 		session = HibernateUtil.getSessionFactory().openSession();
         //session.beginTransaction();
-        String sql = "From Shirt s order by s.sold desc";
+        String sql = "From Shirt s where s.status = true order by s.sold desc";
         Query query = session.createQuery(sql).setMaxResults(4);
         
         ArrayList<Shirt> list = (ArrayList<Shirt>)query.list();
@@ -62,8 +62,9 @@ public class ShirtDAO {
         Query query = session.createQuery(sql);
         ArrayList<Shirt> list =  (ArrayList<Shirt>)query.list();
         session.close();
-        Shirt shirt = list.get(0);
+        Shirt shirt = null;
         if (list.size() > 0) {
+            shirt = list.get(0);
             return shirt;
         }
         return null;
@@ -71,11 +72,9 @@ public class ShirtDAO {
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<Shirt> searchByName(String name){
-		System.out.println("search = "+name);
 		session = HibernateUtil.getSessionFactory().openSession();
-		String sql = "From Shirt s where s.name like '%" + name + "%'";
+		String sql = "From Shirt s where s.name like '%" + name + "%' and s.status = true";
         Query query = session.createQuery(sql);
-        System.out.println(query.toString());
         ArrayList<Shirt> list =  (ArrayList<Shirt>)query.list();
         session.close();
         if (list.size() > 0) {
@@ -87,7 +86,7 @@ public class ShirtDAO {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Shirt> getFilteredList(String cat, String gen, String mat, String siz, String low, String hig, String sor){
 		session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "From Shirt s where";
+        String sql = "From Shirt s where s.status = true and";
         
         if (!cat.equals("0")) {
         	sql = sql + " s.catId = "+cat+" and";
@@ -126,7 +125,6 @@ public class ShirtDAO {
 		}
         Query query = session.createQuery(sql);
 
-        System.out.println(query.toString());
         ArrayList<Shirt> list =  (ArrayList<Shirt>)query.list();
         session.close();
         if (list.size() > 0) {

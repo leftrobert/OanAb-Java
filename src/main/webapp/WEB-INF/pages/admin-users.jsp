@@ -31,6 +31,12 @@
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
 			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
+			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
 			<a href="account" class="navimg">
@@ -184,6 +190,26 @@
 							</div>
 						</div>
 					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
+							</div>
+						</div>
+					</a>
 					<%}
 					if (session.getAttribute("adminin") == null) {%>
 					<a href="account">
@@ -316,7 +342,7 @@
 							<div class="field">
 								Sort by<br>
 								<select name="sort" onchange="this.form.submit()">
-									<option value="regDate"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("id")) {%> selected<%} %>>Registration date</option>
+									<option value="regDate"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("regDate")) {%> selected<%} %>>Registration date</option>
 									<option value="name"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("name")) {%> selected<%} %>>Name</option>
 									<option value="dob"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("dob")) {%> selected<%} %>>Date of birth</option>
 									<option value="gender"<%if (request.getParameter("sort") != null && request.getParameter("sort").equals("gender")) {%> selected<%} %>>Gender</option>
@@ -401,7 +427,6 @@
 										<%} else { %>
 									<tr class="even">
 										<%}
-// 										System.out.println(a.getRoleId());
 										%>
 										<td><%=u.getId() %></td>
 										<td><%=u.getName() %></td>
@@ -558,7 +583,7 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>

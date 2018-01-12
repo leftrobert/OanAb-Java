@@ -28,9 +28,7 @@ public class LoginDAO {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		System.out.println(md5p);
         String sql = "From User u where u.phone = '" + phone + "' and u.password = '" + md5p + "'";
-		System.out.println(sql);
         Query query = session.createQuery(sql);
         ArrayList<User> list = (ArrayList<User>)query.list();
         session.close();
@@ -53,9 +51,7 @@ public class LoginDAO {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		System.out.println(md5p);
         String sql = "From Admin a where a.id = '" + admin + "' and a.password = '" + md5p + "'";
-		System.out.println(sql);
         Query query = session.createQuery(sql);
         ArrayList<Admin> list = (ArrayList<Admin>)query.list();
         session.close();

@@ -127,7 +127,6 @@ public class ManageShirtDAO {
         	sql = sql + " s.status = "+stt;
         }
         sql = sql + " order by s." + sor + " " + ord;
-        System.out.println(sql);
         Query query = session.createQuery(sql);
 
         ArrayList<Shirt> list =  (ArrayList<Shirt>)query.list();

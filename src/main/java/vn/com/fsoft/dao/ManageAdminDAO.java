@@ -70,7 +70,6 @@ public class ManageAdminDAO {
         	sql = sql + " a.status = "+stt;
         }
         sql = sql + " order by a." + sor + " " + ord;
-        System.out.println(sql);
         Query query = session.createQuery(sql);
 
         ArrayList<Admin> list =  (ArrayList<Admin>)query.list();
@@ -153,7 +152,6 @@ public class ManageAdminDAO {
 		Transaction tx = session.beginTransaction();
 		Date d = new Date();
         String start = new SimpleDateFormat("yyyy-MM-dd").format(d);
-        System.out.println("md5 pass = " + md5p(apass));
         Admin a = new Admin(aid, arol, md5p(apass), aname, adob, agen, aphone, amail, start, astt);
         session.save(a);
         tx.commit();

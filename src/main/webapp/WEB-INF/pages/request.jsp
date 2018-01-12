@@ -1,3 +1,7 @@
+<%@page import="org.springframework.web.servlet.mvc.support.RedirectAttributes"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="net.sourceforge.jtds.jdbc.DateTime"%>
 <%@page import="vn.com.fsoft.dao.ShirtDAO"%>
 <%@page import="vn.com.fsoft.model.Request"%>
 <%@page import="java.util.ArrayList"%>
@@ -29,6 +33,12 @@
 			</a>
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
+			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
 			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
@@ -183,6 +193,26 @@
 							</div>
 						</div>
 					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
+							</div>
+						</div>
+					</a>
 					<%}
 					if (session.getAttribute("adminin") == null) {%>
 					<a href="account">
@@ -260,42 +290,49 @@
 						<div class="sec-t-r"></div>
 					</div>
 					<div class="sec-c">
-						<form name="request" id="requestform">
-							<div class="clear"></div>
+						<div class="clear"></div>
+						<form name="request" id="requestform" action="${pageContext.request.contextPath}/handlingRequest" method="post" enctype="multipart/form-data">
 							If you don't want to be a registered member but still want to have your own style of T-shirt, maybe for you or family mambers, soulmates, etc. you still can give your idea for us to make them come true.<br><br>
-							<strong>Attention: required fees may be included while you're not submit as a member.</strong><br>
-							<strong>If you wanna be one, <a href="signup.html">sign up here</a>!</strong><br>
+							<strong>Attention: required	fees may be included while you're not submit as a member.</strong><br>
+							<strong>If you wanna be one, <a href="signup.jsp">sign up here</a>!</strong><br>
 							<div class="clear"></div>
 							<table class="requestform">
 								<tbody>
+									<%if (session.getAttribute("message") != null) {%>
+									<tr>
+										<td>
+											<center>
+												<strong class="success"><%=session.getAttribute("message") %></strong>
+											</center>
+										</td>
+									</tr>
+									<%session.removeAttribute("message");} %>
 									<tr>
 										<td>
 											Your e-mail address<br>
-											<input type="text" name="reqmail" placeholder="E.g. example@ex.xam.ple" maxlength="40">
+											<input type="text" name="reqmail" placeholder="E.g. example@ex.xam.ple"	maxlength="40" required pattern="[^ @]*@[^ @]*"  required >
 										</td>
 									</tr>
 									<tr>
 										<td>
 											Summarize your request<br>
-											<input type="text" name="reqname" placeholder="E.g. Family T-shirts for Lunar New Year" maxlength="100">
+											<input type="text" name="reqname" placeholder="E.g. Family T-shirts for Lunar New Year"	maxlength="100" required>
 										</td>
 									</tr>
 									<tr>
 										<td>
 											Describe<br>
-											<textarea name="reqdesc" form="requestform" placeholder="Please describe your request as detailed as possible."></textarea>
+											<textarea name="reqdesc" form="requestform"	placeholder="Please describe your request as detailed as possible." required></textarea>
 										</td>
 									</tr>
 									<tr>
 										<td>
 											Choose your image (optional)<br>
-											<input type="file" name="reqfile" accept=".png,.jpg">
+											<input type="file" name="reqfile"  accept="image/*">
 										</td>
 									</tr>
 									<tr>
-										<td align="center">
-											<input type="submit" name="reqsend" value="Send">
-										</td>
+										<td align="center"><input type="submit" name="reqsend" value="Send"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -313,7 +350,7 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>

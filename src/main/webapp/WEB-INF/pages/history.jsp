@@ -12,7 +12,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>OanAb - Admin Management</title>
+		<title>OanAb - History</title>
 		<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/bg/VP.ico">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/oanab.css">
 		<script src="${pageContext.request.contextPath}/resources/js/oanab.js"></script>
@@ -34,6 +34,12 @@
 			</a>
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
+			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
 			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
@@ -185,6 +191,26 @@
 							</div><!--
 							--><div class="menuname">
 								<span>Manage T-shirts</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
 							</div>
 						</div>
 					</a>
@@ -372,7 +398,6 @@
 										<%} else { %>
 									<tr class="even">
 										<%}
-// 										System.out.println(a.getRoleId());
 										%>
 										<td><%=b.enDate() %></td>
 										<td><%=b.getReceiverName() %></td>
@@ -493,7 +518,7 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>

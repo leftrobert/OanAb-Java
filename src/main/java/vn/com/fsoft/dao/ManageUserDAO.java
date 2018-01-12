@@ -52,7 +52,6 @@ public class ManageUserDAO {
         	sql = sql + " u.status = "+stt;
         }
         sql = sql + " order by u." + sor + " " + ord;
-        System.out.println(sql);
         Query query = session.createQuery(sql);
 
         ArrayList<User> list =  (ArrayList<User>)query.list();
@@ -98,7 +97,6 @@ public class ManageUserDAO {
 		Date d = new Date();
         String start = new SimpleDateFormat("yyyy-MM-dd").format(d);
         User u = new User(uid, md5p(upass), uname, uphone, ugen, udob, uadd, start, ustt);
-        System.out.println(u.toString());
         session.save(u);
         tx.commit();
         session.close();
@@ -143,5 +141,29 @@ public class ManageUserDAO {
             return next;
         }
         return -1;
+	}
+
+	public int updateUserPersonal(int uid, String uname, String uphone, String ugen, String udob, String uadd) {
+		session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = session.beginTransaction();
+	    String sql = "Update User set name = '" + uname + "', phone = '" + uphone + "', gender = " + ugen + ", dob = '" + udob + "', address = '" + uadd +"'";
+	    sql += " where id = '" + uid + "'";
+	    Query query = session.createQuery(sql);
+	    int result = query.executeUpdate();
+	    tx.commit();
+	    session.close();
+	    return result;
+	}
+
+	public int updateUserPass(int uid, String upass) {
+		session = HibernateUtil.getSessionFactory().openSession();
+	    Transaction tx = session.beginTransaction();
+	    String sql = "Update User set password = '" + md5p(upass) + "'";
+	    sql += " where id = '" + uid + "'";
+	    Query query = session.createQuery(sql);
+	    int result = query.executeUpdate();
+	    tx.commit();
+	    session.close();
+	    return result;
 	}
 }

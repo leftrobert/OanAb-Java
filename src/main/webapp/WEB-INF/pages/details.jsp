@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>OanAb - Shop</title>
+		<title>OanAb - T-shirt details</title>
 		<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/img/bg/VP.ico">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/oanab.css">
 		<script src="${pageContext.request.contextPath}/resources/js/oanab.js"></script>
@@ -29,6 +29,12 @@
 			</a>
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
+			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
 			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
@@ -183,6 +189,26 @@
 							</div>
 						</div>
 					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
+							</div>
+						</div>
+					</a>
 					<%}
 					if (session.getAttribute("adminin") == null) {%>
 					<a href="account">
@@ -262,8 +288,9 @@
 					<div class="sec-c">
 						<div class="clear"></div>
 						<% ShirtDAO sdao = new ShirtDAO();
-						Shirt see = sdao.getShirt(request.getParameter("sid"));
-						if(see != null){
+						Shirt see = null;
+						if(sdao.getShirt(request.getParameter("sid")) != null) {
+							see = sdao.getShirt(request.getParameter("sid"));
 						%>
 						<div class="view">
 							<div id="color"></div>
@@ -307,6 +334,7 @@
 									<td class="rh">Sold out</td>
 									<td class="rd"><%=see.getSold() %></td>
 								</tr>
+								<%if (see.isStatus()) {%>
 								<tr>
 									<td class="rh">Select size</td>
 									<td class="rd">
@@ -334,11 +362,21 @@
 										<input type="submit" name="buy" value="Add to cart">
 									</td>
 								</tr>
+								<%} else { %>
+								<tr>
+									<td class="choose" colspan="2">
+										<br>
+										<strong class="stopped" style="background:#EA8B52;color:#FFFFFF;padding:9px 18px;box-shadow:0 2px 5px rgba(0,0,0,.3);cursor:default;">This T-shirt is stopped selling out.</strong>
+									</td>
+								</tr>
+								<%} %>
 							</table>
 						</form>
 						<script>
-							colorButtonsRendering("<%=see.getColors() %>");
+							colorButtonsRendering("<%=see.getColors() %>", "<%=see.isStatus() %>");
+							<%if (see.isStatus()) {%>
 							sizeSelectRendering("<%=see.getSizes() %>");
+							<%} %>
 						</script>
 						<%} else {%>
 							<center><strong>Invalid Shirt ID. T-Shirt not found!</strong>
@@ -355,7 +393,7 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>

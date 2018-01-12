@@ -114,6 +114,7 @@ html {background: #343D46;}
 .colors a {margin: 0 4px; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,.3); border: 2px solid rgba(0,0,0,0);}
 .chosen {border: 2px solid #15AD8D;}
 .cc {width: 24px; height: 24px; border: 3px solid #F9F9F9;}
+.stopped {background: #EA8B52; color: #FFFFFF; padding: 9px 18px; box-shadow: 0 2px 5px rgba(0,0,0,.3); cursor: default; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
 
 .white {background: #F9F9F9;}
 .lgray {background: #CFCFCF;}
@@ -142,6 +143,7 @@ html {background: #343D46;}
 #requestform input[type=text]:hover, #requestform input[type=text]:focus, #requestform textarea:hover, #requestform textarea:focus {border-bottom: 3px solid #15AD8D; padding-bottom: 6px;}
 .requestform {position: relative; width: 100%;}
 .requestform td {padding-top: 18px;}
+.success {background: #15AD8D; color: #FFFFFF; padding: 9px 18px; box-shadow: 0 2px 5px rgba(0,0,0,.3); cursor: default; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
 
 /* Contact and support */
 #qaform {line-height: 20px; font-size: 14px;}
@@ -175,7 +177,7 @@ html {background: #343D46;}
 #cart table {width: 100%; font-size: 14px; line-height: 36px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,.3);}
 #cart th {background: #EA8B52; color: #FFFFFF;}
 #cart .odd {background: #FFFFFF;}
-#cart .even {background: #CFCFCF;}
+#cart .even {background: #E8E8E8;}
 #cart div {width: 16px; height: 16px; border: 2px solid #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,.3);}
 #cart button, #payment button {width: 200px;}
 #cart a, #cart a:active, #cart a:visited {font-weight: bold; color: #000000;}
@@ -201,6 +203,13 @@ html {background: #343D46;}
 .onpage, .onpage:hover {background: #EA8B52; color: #FFFFFF;}
 .read-only, .read-only:hover, .read-only:focus {background: #CCCCCC; color: #666666; border: none; padding: 9px; cursor: default; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;}
 #slist div {width: 16px; height: 16px; border: 2px solid #FFFFFF; box-shadow: 0 2px 5px rgba(0,0,0,.3); display: inline-block;}
+.sp {height: 15px;}
+.rsr {padding: 9px 18px 9px 0px;}
+.rsl {width: 100px; padding: 9px 0px 9px 18px;}
+.rsl .container {width: 100px;}
+.rqi {width: 100%; background: url(../img/bg/ipre.png) repeat; background-size: 16px 16px; display: table-cell; vertical-align: middle; text-align: center; padding: 30px 0;}
+.rqi img {width: 75%; height: auto;}
+#longcheck {width: 100%;}
 
 .clear {position: relative; width: 100%; height: 30px; background: #F9F9F9; z-index: -1;}
 
@@ -213,7 +222,7 @@ html {background: #343D46;}
 @media screen and (max-width: 511px) and (min-width: 256px) {.sec-c, .sec-f {width: 256px;}}
 
 @media screen and (min-width: 660px) {#reg .sec-c, #payment .sec-c, .sec-i {width: 660px;} #long {width: 566px;}}
-@media screen and (max-width: 659px) {#reg .sec-c, #payment .sec-c, .sec-i {width: 330px;}}
+@media screen and (max-width: 659px) {#reg .sec-c, #payment .sec-c, .sec-i {width: 330px;} #regform.sec-i, #longcheck {width: 100%;}}
 
 @media screen and (min-width: 800px) {#request .sec-c, #qa .sec-c {width: 800px;}}
 @media screen and (max-width: 799px) {#request .sec-c, #qa .sec-c {width: 400px;}}

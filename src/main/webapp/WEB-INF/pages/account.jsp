@@ -13,6 +13,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
+		<%if (session.getAttribute("loggedin") == null) {%><script>window.location.assign("login");</script><%session.setAttribute("message", "You have to login");} %>
 		<%if (session.getAttribute("loggedin") != null || session.getAttribute("adminin") != null || session.getAttribute("cart") != null) { %>
 		<div class="usernav">
 			<%if (session.getAttribute("loggedin") == null && session.getAttribute("adminin") != null) {%>
@@ -27,6 +28,12 @@
 			</a>
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
+			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
 			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
@@ -181,6 +188,26 @@
 							</div>
 						</div>
 					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
+							</div>
+						</div>
+					</a>
 					<%}
 					if (session.getAttribute("adminin") == null) {%>
 					<a href="account">
@@ -259,18 +286,17 @@
 						</div>
 						<div class="sec-t-r"></div>
 					</div>
-					<form class="sec-c" id="regform" action="updateUser">
+					<form class="sec-c" id="regform" method="post" action="updateUser">
 						<div class="field">
 							Your name<br>
-							<input type="text" name="name" placeholder="Your full name" value="<%=u.getName() %>">
+							<input type="text" name="name" placeholder="Your full name" value="<%=u.getName() %>" required>
 						</div>
 						<div class="field">
 							Phone number<br>
-							<input type="text" name="phone" placeholder="Mobile" value="<%=u.getPhone() %>">
+							<input type="text" name="phone" placeholder="Mobile" value="<%=u.getPhone() %>" required>
 						</div>
 						<div class="field">
 							Gender<br>
-							<%System.out.println(u.isGender()); %>
 							<select name="gender" form="regform">
 								<option value="1"<%if (u.isGender()) {%> selected<%} %>>Male</option>
 								<option value="0"<%if (!u.isGender()) {%> selected<%} %>>Female</option>
@@ -278,13 +304,14 @@
 						</div>
 						<div class="field">
 							Date of birth<br>
-							<input type="date" name="dob" value="<%=u.getDob() %>">
+							<input type="date" name="dob" value="<%=u.getDob() %>" required>
 						</div>
 						<div class="field" id="long">
 							Address<br>
-							<input type="text" name="address" placeholder="Your most recent address" value="<%=u.getAddress() %>">
+							<input type="text" name="address" placeholder="Your most recent address" value="<%=u.getAddress() %>" required>
 						</div>
 						<div class="field" id="long" style="text-align: center;">
+							<input type="hidden" name="uid" value="<%=u.getId() %>">
 							<input type="submit" name="change" value="Change">
 						</div>
 					</form>
@@ -298,14 +325,17 @@
 						</div>
 						<div class="sec-t-r"></div>
 					</div>
-					<form class="sec-c" id="regform">
+					<form class="sec-c" id="regform" method="post" action="updateUserPass">
+						<div class="field" id="long">
+							<div id="alert" style="padding: 5px 9px 13px 9px;"></div>
+						</div>
 						<div class="field" id="long">
 							Old password<br>
 							<input type="password" name="pass" placeholder="Old password">
 						</div>
 						<div class="field">
 							New password<br>
-							<input type="password" name="pass" placeholder="New password">
+							<input type="password" name="passn" placeholder="New password">
 						</div>
 						<div class="field">
 							Confirm password<br>
@@ -327,10 +357,14 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>
 		</div>
+		
+		<%if (session.getAttribute("message") != null) {%>
+		<script>loginFailed("<%=session.getAttribute("message") %>")</script>
+		<%session.removeAttribute("message");} %>
 	</body>
 </html>

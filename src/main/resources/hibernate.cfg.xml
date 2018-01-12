@@ -27,14 +27,14 @@
         
         <!-- Mention here all the model classes along with their package name -->
  		<mapping class="vn.com.fsoft.model.Admin"/>
-<!--  		<mapping class="vn.com.fsoft.model.Bill"/> -->
+ 		<mapping class="vn.com.fsoft.model.Bill"/>
  		<mapping class="vn.com.fsoft.model.Cart"/>
  		<mapping class="vn.com.fsoft.model.Category"/>
  		<mapping class="vn.com.fsoft.model.Material"/>
-<!--  		<mapping class="vn.com.fsoft.model.Request"/> -->
+ 		<mapping class="vn.com.fsoft.model.Request"/>
  		<mapping class="vn.com.fsoft.model.Role"/>
  		<mapping class="vn.com.fsoft.model.Shirt"/>
-<!--  		<mapping class="vn.com.fsoft.model.Support"/> -->
+ 		<mapping class="vn.com.fsoft.model.Support"/>
  		<mapping class="vn.com.fsoft.model.User"/>
  		 
     </session-factory>

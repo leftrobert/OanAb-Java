@@ -34,6 +34,12 @@
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
 			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
+			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
 			<a href="account" class="navimg">
@@ -187,6 +193,26 @@
 							</div>
 						</div>
 					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
+							</div>
+						</div>
+					</a>
 					<%}
 					if (session.getAttribute("adminin") == null) {%>
 					<a href="account">
@@ -335,8 +361,7 @@
 					</div>
 					<div class="clear"></div>
 					<div class="sec-c">
-						<% System.out.println(request.getParameter("cat") + request.getParameter("gen") + request.getParameter("mat") + request.getParameter("size") + request.getParameter("low") + request.getParameter("high") + request.getParameter("sort"));
-						ShirtDAO sdao = new ShirtDAO();
+						<% ShirtDAO sdao = new ShirtDAO();
 						ArrayList<Shirt> slist;
 						if (request.getParameter("cat") == null || request.getParameter("gen") == null || request.getParameter("mat") == null || request.getParameter("size") == null || request.getParameter("low") == null || request.getParameter("high") == null || request.getParameter("sort") == null) {
 							slist = sdao.getList();
@@ -377,7 +402,7 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>

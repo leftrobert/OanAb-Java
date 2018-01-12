@@ -12,6 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RedirectController{
 	@RequestMapping(value = "/index", method=RequestMethod.GET)
+	public ModelAndView displayHome(HttpServletRequest arg0, HttpServletResponse arg1){
+		return new ModelAndView("index");
+	}
+	
+	@RequestMapping(value = "/index", method=RequestMethod.GET)
 	public ModelAndView displayIndex(HttpServletRequest arg0, HttpServletResponse arg1){
 		return new ModelAndView("index");
 	}
@@ -44,6 +49,16 @@ public class RedirectController{
 	@RequestMapping(value = "/admin-shirts", method=RequestMethod.GET)
 	public ModelAndView displayShirtManage(HttpServletRequest arg0, HttpServletResponse arg1, HttpSession session){
 		return new ModelAndView("admin-shirts");
+	}
+
+	@RequestMapping(value = "/admin-supports", method=RequestMethod.GET)
+	public ModelAndView displaySupportManage(HttpServletRequest arg0, HttpServletResponse arg1, HttpSession session){
+		return new ModelAndView("admin-supports");
+	}
+
+	@RequestMapping(value = "/admin-requests", method=RequestMethod.GET)
+	public ModelAndView displayRequestManage(HttpServletRequest arg0, HttpServletResponse arg1, HttpSession session){
+		return new ModelAndView("admin-requests");
 	}
 
 	@RequestMapping(value = "/login", method=RequestMethod.GET)
@@ -84,5 +99,15 @@ public class RedirectController{
 	@RequestMapping(value = "/search", method=RequestMethod.GET)
 	public ModelAndView displaySearch(HttpServletRequest arg0, HttpServletResponse arg1){
 		return new ModelAndView("search");
+	}
+
+	@RequestMapping(value = "/signup", method=RequestMethod.GET)
+	public ModelAndView displaySignup(HttpServletRequest arg0, HttpServletResponse arg1){
+		return new ModelAndView("signup");
+	}
+
+	@RequestMapping(value = "/tandp", method=RequestMethod.GET)
+	public ModelAndView displayTAndP(HttpServletRequest arg0, HttpServletResponse arg1){
+		return new ModelAndView("tandp");
 	}
 }

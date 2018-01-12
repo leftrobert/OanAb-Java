@@ -38,7 +38,6 @@ public class BillDAO {
         	sql = sql + " and b.paymentStatus = "+stt;
         }
         sql = sql + " order by b." + sor + " " + ord;
-        System.out.println(sql);
         Query query = session.createQuery(sql);
 
         ArrayList<Bill> list =  (ArrayList<Bill>)query.list();

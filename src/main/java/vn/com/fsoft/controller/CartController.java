@@ -31,7 +31,6 @@ public class CartController{
 		}
 		for (Cart c0: cartlist) {
 			if (c0.getShirtId().equals(shirtid) && c0.getSize().equals(size) && c0.getColor().equals(color)) {
-				System.out.println("mat hang da co");
 				c0.setAmount(c0.getAmount() + a);
 				c0.setPrice(c0.getAmount() * sdao.getShirt(shirtid).getPrice());
 				session.setAttribute("cart", cartlist);

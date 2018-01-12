@@ -181,6 +181,7 @@ public class Shirt {
 		this.catId = catId;
 		this.name = name;
 		this.gender = Integer.parseInt(gender);
+		this.material = "100% cotton";
 		this.date = date;
 		this.price = Integer.parseInt(price);
 		this.sizes = sizes;

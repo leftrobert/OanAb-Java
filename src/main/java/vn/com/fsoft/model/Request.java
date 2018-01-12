@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class Request {
 	@Id
 	@Column(name="ID")
-	private String id;
+	private int id;
 
 	@Column(name="Email")
 	private String email;
@@ -19,19 +19,22 @@ public class Request {
 	private String title;
 	
 	@Column(name="Description")
-	private String desc;
+	private String description;
+	
+	@Column(name="Date")
+	private String date;
 	
 	@Column(name="ImageFile")
 	private String imageFile;
 	
 	@Column(name="Status")
-	private String status;
+	private boolean status;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -51,12 +54,16 @@ public class Request {
 		this.title = title;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public String getImageFile() {
@@ -67,11 +74,11 @@ public class Request {
 		this.imageFile = imageFile;
 	}
 
-	public String getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
@@ -79,19 +86,29 @@ public class Request {
 		super();
 	}
 
-	public Request(String id, String email, String title, String desc, String imageFile, String status) {
+	public Request(int id, String email, String title, String description, String date, String imageFile, boolean status) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.title = title;
-		this.desc = desc;
+		this.date = date;
+		this.description = description;
 		this.imageFile = imageFile;
 		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "Request [id=" + id + ", email=" + email + ", title=" + title + ", desc=" + desc + ", imageFile="
+		return "Request [id=" + id + ", email=" + email + ", title=" + title + ", description=" + description + ", imageFile="
 				+ imageFile + ", status=" + status + "]";
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public String enDate() {
+		String[] t = date.split("-");
+		return t[1]+"/"+t[2]+"/"+t[0];
 	}
 }

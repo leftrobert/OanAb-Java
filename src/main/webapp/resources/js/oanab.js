@@ -34,25 +34,29 @@ function subOut() {
 }
 
 // Tao cac nut chon mau o tren cung + do vao tag select
-function colorButtonsRendering(colors) {
+function colorButtonsRendering(colors, status) {
 	var colorArray = colors.split(",");
 	var colorContainer = document.getElementsByClassName("colors")[0];
-	var colorSelect = document.getElementsByName("color")[0];
+	if (status == "true") {
+		var colorSelect = document.getElementsByName("color")[0];
+	}
 	for (var i = 0; i <= colorArray.length - 1; i++) {
 		var divTag = document.createElement("div");
 		var aTag = document.createElement("a");
-		var optionTag = document.createElement("option");
-		var optionText = document.createTextNode(colorArray[i].toUpperCase());
 		divTag.setAttribute("class", "cc " + colorArray[i]);
-		divTag.setAttribute("onclick", "colorChange('" + colorArray[i] + "')");
+		divTag.setAttribute("onclick", "colorChange('" + colorArray[i] + "', '" + status + "')");
 		aTag.setAttribute("href", "#color");
 		aTag.appendChild(divTag);
 		colorContainer.appendChild(aTag);
-		optionTag.setAttribute("value", colorArray[i]);
-		optionTag.appendChild(optionText);
-		colorSelect.appendChild(optionTag);
+		if (status == "true") {
+			var optionTag = document.createElement("option");
+			var optionText = document.createTextNode(colorArray[i].toUpperCase());
+			optionTag.setAttribute("value", colorArray[i]);
+			optionTag.appendChild(optionText);
+			colorSelect.appendChild(optionTag);
+		}
 	}
-	colorChange(colorArray[0]);
+	colorChange(colorArray[0], status);
 }
 
 // Thay doi lua chon trong form sau khi xem mau
@@ -62,10 +66,12 @@ function colorSelecting(c) {
 }
 
 //Chon mau ao o muc xem hang
-function colorChange(c) {
+function colorChange(c, status) {
 	var el = document.getElementById("color");
 	el.className = c;
-	colorSelecting(c);
+	if (status == "true") {
+		colorSelecting(c);
+	}
 }
 
 //Lay mau ao dau tien o trang index va shop
@@ -171,6 +177,46 @@ function launchingStatus() {
 			ss.innerHTML = " Stopped";
 			astt.value = "0";
 		}
+	}
+}
+
+function solvingStatus() {
+	if (document.forms["regform"]["status"]) {
+		var el = document.forms["regform"]["status"];
+		var ss = document.getElementsByName("s-status")[0];
+		var astt = document.getElementsByName("sstt")[0];
+		if (el.checked) {
+			ss.innerHTML = " Done";
+			astt.value = "1";
+		} else {
+			ss.innerHTML = " Pending";
+			astt.value = "0";
+		}
+	}
+}
+
+function rsolvingStatus() {
+	if (document.forms["regform"]["status"]) {
+		var el = document.forms["regform"]["status"];
+		var ss = document.getElementsByName("s-status")[0];
+		var astt = document.getElementsByName("rstt")[0];
+		if (el.checked) {
+			ss.innerHTML = " Done";
+			astt.value = "1";
+		} else {
+			ss.innerHTML = " Pending";
+			astt.value = "0";
+		}
+	}
+}
+
+function agreeStatus() {
+	var el = document.forms["regform"]["status"];
+	var astt = document.getElementsByName("agreed")[0];
+	if (el.checked) {
+		astt.value = "1";
+	} else {
+		astt.value = "0";
 	}
 }
 

@@ -25,10 +25,15 @@ public class LoginController{
 			return "redirect:login";
 		} else if (ldao.checkLogin(phone, pass)){
 			User u = ldao.getUser(phone);
-			session.setAttribute("loggedin", u);
-			if (session.getAttribute("adminin") != null) session.removeAttribute("adminin");
-			if (session.getAttribute("message") != null) session.removeAttribute("message");
-			return "redirect:shop";
+			if (u.isStatus()) {
+				session.setAttribute("loggedin", u);
+				if (session.getAttribute("adminin") != null) session.removeAttribute("adminin");
+				if (session.getAttribute("message") != null) session.removeAttribute("message");
+				return "redirect:account";
+			} else {
+				session.setAttribute("message", "You are temporarily banned");
+				return "redirect:login";
+			}
 		} else {
 			session.setAttribute("message", "Invalid credentials");
 			return "redirect:login";

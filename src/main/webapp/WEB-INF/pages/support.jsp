@@ -30,6 +30,12 @@
 			<a href="admin-shirts" class="navimg">
 				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-9.svg" width="20" height="20">
 			</a>
+			<a href="admin-supports" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="20" height="20">
+			</a>
+			<a href="admin-requests" class="navimg">
+				<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="20" height="20">
+			</a>
 			<%}
 			if (session.getAttribute("adminin") == null && session.getAttribute("loggedin") != null) {%>
 			<a href="account" class="navimg">
@@ -183,6 +189,26 @@
 							</div>
 						</div>
 					</a>
+					<a href="admin-supports">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-11.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage Q&A</span>
+							</div>
+						</div>
+					</a>
+					<a href="admin-requests">
+						<div class="menu-i">
+							<div class="menuimg">
+								<img src="${pageContext.request.contextPath}/resources/img/bg/nav-i-12.svg" width="24" height="24">
+							</div><!--
+							--><div class="menuname">
+								<span>Manage requests</span>
+							</div>
+						</div>
+					</a>
 					<%}
 					if (session.getAttribute("adminin") == null) {%>
 					<a href="account">
@@ -260,39 +286,46 @@
 						<div class="sec-t-r"></div>
 					</div>
 					<div class="sec-c">
-						<form name="qa" id="qaform">
-							<div class="clear"></div>
-							If you want to co-operate with us, kindly let us know: <a href="mailto:contact@oanab.com">contact@oanab.com</a>.<br>
-							And if you have some questions for us, please send us an email to this address <a href="mailto:support@oanab.com">support@oanab.com</a> or fill in the form below.<br>
-							<div class="clear"></div>
-							<table class="qaform">
-								<tbody>
-									<tr>
-										<td>
-											Your e-mail address<br>
-											<input type="text" name="mail" placeholder="E.g. example@ex.xam.ple" maxlength="40">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Summarize your problem<br>
-											<input type="text" name="name" placeholder="E.g. Couldn't list the filtered T-shirts" maxlength="100">
-										</td>
-									</tr>
-									<tr>
-										<td>
-											Describe<br>
-											<textarea name="desc" form="requestform" placeholder="Please describe your problem as detailed as possible."></textarea>
-										</td>
-									</tr>
-									<tr>
-										<td align="center">
-											<input type="submit" name="reqsend" value="Send">
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</form>
+						<form name="qa" id="qaform" action="handlingSupport" method="post" >
+						<div class="clear"></div>
+						If you want to co-operate with us, kindly let us know: <a href="mailto:contact@oanab.com">contact@oanab.com</a>.<br>
+						And if you have some questions for us, please send us an email to this address <a href="mailto:support@oanab.com">support@oanab.com</a>	or fill in the form below.<br>
+						<div class="clear"></div>
+						<table class="qaform">
+							<tbody>
+								<%if (session.getAttribute("message") != null) {%>
+								<tr>
+									<td>
+										<center>
+											<strong class="success"><%=session.getAttribute("message") %></strong>
+										</center>
+									</td>
+								</tr>
+								<%session.removeAttribute("message");} %>
+								<tr>
+									<td>
+										Your e-mail address<br>
+										<input type="text" name="mail" placeholder="E.g. example@ex.xam.ple" maxlength="40" required pattern="[^ @]*@[^ @]*" >
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Summarize your problem<br>
+										<input type="text" name="name" placeholder="E.g. Couldn't list the filtered T-shirts" maxlength="100" required >
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Describe<br>
+										<textarea name="desc" form="qaform" placeholder="Please describe your problem as detailed as possible." required></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td align="center"><input type="submit" name="supsend" value="Send"></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
 					</div>
 				</div>
 				<div class="clear"></div>
@@ -306,7 +339,7 @@
 						For studying and internship only, not for any commercial purpose.
 					</td>
 					<td align="right" width="128">
-						OANAB _ 2017
+						OANAB _ 2018
 					</td>
 				</tr>
 			</table>
