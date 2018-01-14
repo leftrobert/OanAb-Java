@@ -212,7 +212,7 @@ public class ManageShirtDAO {
         if (list.size() > 0) {
         	Shirt s = list.get(list.size() - 1);
     		int next = Integer.parseInt(s.getId()) + 1;
-            return String.valueOf(next);
+            return String.format("%04d", next);
         }
         return "";
 	}
